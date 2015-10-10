@@ -36,14 +36,13 @@ var vowelCount = function (string) {
 // BONUS PROBLEM
 // -=-=-=-=-=-=-
 
-// Partially working, but it does not know when a lower number of coins can be used by skipping a larger coin.
+// Considers some different combinations of coins by beginning test at different places in the coins array. Still probably does not give all possible combinations.
 
-
-coinDeterminer = function ( number ) {
+possibleCoins = function (number,startindex){
 	var coins = ["11","9","7","5","1"]
 	var numCoins = 0
 	var number = number
-	for(var i = 0; i<coins.length; i++){
+	for(var i = startindex; i<coins.length; i++){
 		var remainder = number%coins[i]
 		if(remainder===0){
 			numCoins += number/coins[i]
@@ -56,5 +55,15 @@ coinDeterminer = function ( number ) {
 
 	}
 	return numCoins
+}
+
+coinDeterminer = function ( number ) {
+	var possibilities = []
+	for(var x = 0; x < 5; x++){
+		possibilities.push(possibleCoins(number,x))
+	}
+	return possibilities.sort(function(a,b){
+		return a-b
+	})[0]
 }
 
